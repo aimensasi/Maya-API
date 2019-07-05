@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/Maya.csproj": {}
+  },
+  "projects": {
+    "/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/Maya.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/Maya.csproj",
+        "projectName": "Maya",
+        "projectPath": "/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/Maya.csproj",
+        "packagesPath": "/Users/aimen.s.a.sasi/.nuget/packages/",
+        "outputPath": "/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/aimen.s.a.sasi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
