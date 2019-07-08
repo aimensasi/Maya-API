@@ -55,6 +55,22 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "OpenIddict": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "OpenIddict.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "OpenIddict.Mvc": {
+              "target": "Package",
+              "version": "[2.0.0, )"
             }
           },
           "imports": [
