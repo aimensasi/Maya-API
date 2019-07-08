@@ -9,5 +9,7 @@ namespace Maya.Services.ProductServices {
 
 		Task<(bool state, object response)> store(NewProductRequest request);
 		Task<(bool state, object response)> update(NewProductRequest request, int id);
+
+		Task<(bool state, object response)> delete(int id);
 	}
 }

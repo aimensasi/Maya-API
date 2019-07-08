@@ -56,5 +56,18 @@ namespace Maya.Controllers.Admin {
 			return BadRequest(response);
 		}
 
+
+		[HttpDelete]
+		[Route("{id:int}")]
+		public async Task<IActionResult> destroy(int id){
+			var ( state, response ) = await _productServices.delete(id);
+
+			if (state == true){
+				return Ok(response);
+			}
+
+			return BadRequest(response);
+		}
+
 	}
 }

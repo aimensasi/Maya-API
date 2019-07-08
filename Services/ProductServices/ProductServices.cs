@@ -60,6 +60,19 @@ namespace Maya.Services.ProductServices {
 			return (true, transform(product));
 		}
 
+		public async Task<(bool state, object response)> delete(int id){
+			var product = await _context.Products.FindAsync(id);
+
+			if (product == null){
+				return (false, new { message = "Product Not Found or Does not exists" });
+			}
+
+			_context.Products.Remove(product);
+			await _context.SaveChangesAsync();
+			
+			return (true, new { message = "Product deleted successfully" });
+		}
+
 		/* Product Transformation */
 		public ICollection<object> transformCollection(ICollection<Product> products) {
 			var productCollection = new List<object>();
