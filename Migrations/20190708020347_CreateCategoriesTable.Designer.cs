@@ -4,14 +4,16 @@ using Maya.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Maya.Migrations
 {
     [DbContext(typeof(BundleContext))]
-    partial class BundleContextModelSnapshot : ModelSnapshot
+    [Migration("20190708020347_CreateCategoriesTable")]
+    partial class CreateCategoriesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,8 +50,6 @@ namespace Maya.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired();
-
-                    b.Property<decimal>("Price");
 
                     b.HasKey("Id");
 
@@ -373,8 +373,8 @@ namespace Maya.Migrations
 
             modelBuilder.Entity("Maya.Models.Product", b =>
                 {
-                    b.HasOne("Maya.Models.Category", "Category")
-                        .WithMany("Products")
+                    b.HasOne("Maya.Models.Category", "category")
+                        .WithMany("products")
                         .HasForeignKey("CategoryId");
                 });
 
