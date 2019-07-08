@@ -98,5 +98,6 @@ namespace Maya {
 						 .AddDefaultTokenProviders()
 						 .AddSignInManager<SignInManager<User>>();
 		}
+
 	}
 }

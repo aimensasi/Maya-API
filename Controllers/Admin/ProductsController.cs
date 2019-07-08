@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Maya.RequestProperties;
+using Microsoft.AspNetCore.Authorization;
 
 using Maya.Services.ProductServices;
 
 namespace Maya.Controllers.Admin {
 
 	[Route("api/admin/products")]
+	[Authorize(Roles = "admin")]
 	public class ProductsController : AdminController {
 
 		private readonly IProductServices _productServices;
