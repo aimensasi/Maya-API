@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,5 +26,7 @@ namespace Maya.Models {
 		public DateTimeOffset CreatedAt { get; set; }
 
 		public virtual Category Category { get; set; }
+
+		public virtual ICollection<ProductImage> ProductImages { get; set; }
 	}
 }

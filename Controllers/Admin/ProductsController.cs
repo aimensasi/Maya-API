@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Maya.RequestProperties;
@@ -50,6 +51,20 @@ namespace Maya.Controllers.Admin {
 			}
 
 			var (state, response) = await _productServices.update(request, id);
+
+			if (state == true) {
+				return Ok(response);
+			}
+
+			return BadRequest(response);
+		}
+
+		[HttpPost]
+		[Route("{id:int}/images")]
+		public async Task<IActionResult> uploadImages(int id){
+			IFormFile image = Request.Form.Files[0];
+			
+			var (state, response) = await _productServices.uploadImage(image, id);
 
 			if (state == true) {
 				return Ok(response);

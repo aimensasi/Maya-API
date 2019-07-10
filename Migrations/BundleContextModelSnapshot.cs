@@ -58,6 +58,24 @@ namespace Maya.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Maya.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Image")
+                        .IsRequired();
+
+                    b.Property<int>("ProductId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+                });
+
             modelBuilder.Entity("Maya.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -376,6 +394,14 @@ namespace Maya.Migrations
                     b.HasOne("Maya.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("Maya.Models.ProductImage", b =>
+                {
+                    b.HasOne("Maya.Models.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

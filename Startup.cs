@@ -76,6 +76,7 @@ namespace Maya {
 			// app.UseAdminRegisterBlocker();
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
+			app.UseStaticFiles();
 			app.UseMvc();
 		}
 
