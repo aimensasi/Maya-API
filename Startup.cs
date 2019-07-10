@@ -60,6 +60,8 @@ namespace Maya {
 			services.AddAuthentication(options => {
 				options.DefaultScheme = OpenIddictValidationDefaults.AuthenticationScheme;
 			});
+
+			services.AddHttpContextAccessor();
 			
 			AddIdentityCoreServices(services);
 		}

@@ -18,14 +18,18 @@ namespace Maya.Services.ProductServices {
 		private readonly string FILE_PATH = "storage/products";
 		private readonly BundleContext _context;
 		private readonly IHostingEnvironment _env;
+		private readonly IHttpContextAccessor _httpContext;
 
-		public ProductServices(BundleContext context, IHostingEnvironment env) {
+		public ProductServices(BundleContext context, IHostingEnvironment env, IHttpContextAccessor httpContext) {
 			_context = context;
 			_env = env;
+			_httpContext = httpContext;
 		}
 
 		public ICollection<object> products() {
-			var products = _context.Products.Include(product => product.Category).ToList();
+			var products = _context.Products
+														 .Include(product => product.Category)
+														 .Include(product => product.ProductImages).ToList();
 			return transformCollection(products);
 		}
 
@@ -82,7 +86,10 @@ namespace Maya.Services.ProductServices {
 			return (true, new { message = "Product deleted successfully" });
 		}
 
-		public async Task<(bool state, object response)> uploadImage(IFormFile image, int id) {
+		public async Task<(bool state, object response)> uploadImage(HttpRequest Request, int id) {
+
+			IFormFile image = Request.Form.Files[0];
+
 			if (image.Length == 0) {
 				return (false, new { message = "Provided media is not valid" });
 			}
@@ -101,11 +108,11 @@ namespace Maya.Services.ProductServices {
 				string filename = generateFileName(image);
 				path = Path.Combine(path, filename);
 
-				using(var stream = new FileStream(path, FileMode.Create)){
+				using (var stream = new FileStream(path, FileMode.Create)) {
 					await image.CopyToAsync(stream);
 				}
 
-				ProductImage productImage = new ProductImage{
+				ProductImage productImage = new ProductImage {
 					ProductId = product.Id,
 					Image = filename,
 				};
@@ -116,7 +123,7 @@ namespace Maya.Services.ProductServices {
 				return (true, new { message = "Upload Completed", url = transformUrl(filename) });
 
 			} catch (Exception e) {
-				return (false, new {message = "Something Went wrong, please try again later" });
+				return (false, new { message = "Something Went wrong, please try again later" });
 			}
 		}
 
@@ -130,7 +137,7 @@ namespace Maya.Services.ProductServices {
 			}
 		}
 
-		private string generateFileName(IFormFile file){
+		private string generateFileName(IFormFile file) {
 			string ext = Path.GetExtension(file.FileName);
 			string filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
 
@@ -149,10 +156,20 @@ namespace Maya.Services.ProductServices {
 			}
 		}
 
-		private string transformUrl(string filename){
-			// TODO tranaform Product Images
+		private string transformUrl(string filename) {
+			string host = $"{_httpContext.HttpContext.Request.Scheme}://{_httpContext.HttpContext.Request.Host}";
 
-			return FILE_PATH +  "/"  + filename;
+			return host + '/' + FILE_PATH + "/" + filename;
+		}
+
+		private List<object> transformProductImages(Product product) {
+			var productImages = new List<object>();
+
+			foreach (ProductImage productImage in product.ProductImages) {
+				productImages.Add(transformUrl(productImage.Image));
+			}
+
+			return productImages;
 		}
 
 		private ICollection<object> transformCollection(ICollection<Product> products) {
@@ -173,6 +190,7 @@ namespace Maya.Services.ProductServices {
 				category = product.Category.Name,
 				price = product.Price,
 				createdAt = product.CreatedAt,
+				images = transformProductImages(product),
 			};
 		}
 	}

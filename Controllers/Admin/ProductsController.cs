@@ -62,9 +62,8 @@ namespace Maya.Controllers.Admin {
 		[HttpPost]
 		[Route("{id:int}/images")]
 		public async Task<IActionResult> uploadImages(int id){
-			IFormFile image = Request.Form.Files[0];
-			
-			var (state, response) = await _productServices.uploadImage(image, id);
+
+			var (state, response) = await _productServices.uploadImage(Request, id);
 
 			if (state == true) {
 				return Ok(response);
