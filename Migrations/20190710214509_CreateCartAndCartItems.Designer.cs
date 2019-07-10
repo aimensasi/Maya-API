@@ -4,14 +4,16 @@ using Maya.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Maya.Migrations
 {
     [DbContext(typeof(BundleContext))]
-    partial class BundleContextModelSnapshot : ModelSnapshot
+    [Migration("20190710214509_CreateCartAndCartItems")]
+    partial class CreateCartAndCartItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
