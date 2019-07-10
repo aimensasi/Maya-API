@@ -13,10 +13,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Maya.Models;
 using Microsoft.EntityFrameworkCore;
-using Maya.Services.UserServices;
 using OpenIddict.Validation;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Maya.Middlewares;
+
+using Maya.Services.UserServices;
+using Maya.Services.ProductServices;
 
 namespace Maya {
 	public class Startup {
@@ -58,6 +60,8 @@ namespace Maya {
 			services.AddAuthentication(options => {
 				options.DefaultScheme = OpenIddictValidationDefaults.AuthenticationScheme;
 			});
+
+			services.AddHttpContextAccessor();
 			
 			AddIdentityCoreServices(services);
 		}
@@ -74,11 +78,13 @@ namespace Maya {
 			// app.UseAdminRegisterBlocker();
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
+			app.UseStaticFiles();
 			app.UseMvc();
 		}
 
 		public void ConfigureAppServices(IServiceCollection services){
 			services.AddScoped<IUserServices, UserServices>();
+			services.AddScoped<IProductServices, ProductServices>();
 		}
 		public static void AddIdentityCoreServices(IServiceCollection services) {
 			var builder = services.AddIdentityCore<User>(option => {
@@ -95,5 +101,6 @@ namespace Maya {
 						 .AddDefaultTokenProviders()
 						 .AddSignInManager<SignInManager<User>>();
 		}
+
 	}
 }

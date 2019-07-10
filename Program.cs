@@ -7,15 +7,32 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Maya.Seeders;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Maya {
 	public class Program {
-		public static void Main (string[] args) {
-			CreateWebHostBuilder (args).Build ().Run ();
+		public static void Main(string[] args) {
+			var host = CreateWebHostBuilder(args).Build();
+			InitDatabaseSeeder(host);
+			host.Run();
 		}
 
-		public static IWebHostBuilder CreateWebHostBuilder (string[] args) =>
-			WebHost.CreateDefaultBuilder (args)
-			.UseStartup<Startup> ();
+		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+			WebHost.CreateDefaultBuilder(args)
+			.UseStartup<Startup>();
+
+		public static void InitDatabaseSeeder(IWebHost host){
+			using (var scope = host.Services.CreateScope()) {
+				var services = scope.ServiceProvider;
+
+				try {
+					DatabaseSeeder.Seed(services).Wait();
+				} catch (Exception ex) {
+					var logger = services.GetRequiredService<ILogger<Program>>();
+					logger.LogError(ex, "An error occurred seeding the database.");
+				}
+			}
+		}
 	}
 }

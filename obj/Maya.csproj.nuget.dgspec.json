@@ -39,11 +39,19 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "Bogus": {
+              "target": "Package",
+              "version": "[28.0.2, )"
+            },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Razor.Design": {
               "suppressParent": "All",

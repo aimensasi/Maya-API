@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "120265dfe7d9282a80cc2b874dcfd85d25d8a30a"
+    "signature": "91f57a03cb93aa740799c9ef302861988c98f795"
   },
   "compilationOptions": {
     "defines": [
@@ -24,7 +24,9 @@
     ".NETCoreApp,Version=v2.2": {
       "Maya/1.0.0": {
         "dependencies": {
+          "Bogus": "28.0.2",
           "Microsoft.AspNetCore.App": "2.2.0",
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.3",
@@ -99,6 +101,17 @@
         },
         "compile": {
           "lib/netcoreapp2.0/AspNet.Security.OpenIdConnect.Server.dll": {}
+        }
+      },
+      "Bogus/28.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/Bogus.dll": {
+            "assemblyVersion": "28.0.2.0",
+            "fileVersion": "28.0.2.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Bogus.dll": {}
         }
       },
       "CryptoHelper/3.0.2": {
@@ -3781,6 +3794,13 @@
       "sha512": "sha512-4UqMSjq5Z7qZwNmVLnIEpYH7PKlsC6lC5qUc3lioBSG41kPGarJEIIM4J5hyBY1gptki0i+2H0jFIri7Z8H4sQ==",
       "path": "aspnet.security.openidconnect.server/2.0.0",
       "hashPath": "aspnet.security.openidconnect.server.2.0.0.nupkg.sha512"
+    },
+    "Bogus/28.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uObDJgJwbt7N3bq3LDQMQb7BTaOCN1GiSnGkveFWq4+pdGMs8U+AoGsdKecXfiKHeWJvlET2GtZ3pFbcwSC2XQ==",
+      "path": "bogus/28.0.2",
+      "hashPath": "bogus.28.0.2.nupkg.sha512"
     },
     "CryptoHelper/3.0.2": {
       "type": "package",
