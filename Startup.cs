@@ -16,9 +16,11 @@ using Microsoft.EntityFrameworkCore;
 using OpenIddict.Validation;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Maya.Middlewares;
+using Microsoft.OpenApi.Models;
 
 using Maya.Services.UserServices;
 using Maya.Services.ProductServices;
+using Maya.Services.CartServices;
 
 namespace Maya {
 	public class Startup {
@@ -31,6 +33,9 @@ namespace Maya {
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddSwaggerGen(c => {
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+			});
 
 			services.AddDbContext<BundleContext>(options => {
 				options.UseSqlServer(Configuration.GetConnectionString("BundleContext"));
@@ -75,6 +80,15 @@ namespace Maya {
 				app.UseHsts();
 			}
 
+			// Enable middleware to serve generated Swagger as a JSON endpoint.
+			app.UseSwagger();
+
+			// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+			// specifying the Swagger JSON endpoint.
+			app.UseSwaggerUI(c => {
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+			});
+
 			// app.UseAdminRegisterBlocker();
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
@@ -85,6 +99,7 @@ namespace Maya {
 		public void ConfigureAppServices(IServiceCollection services){
 			services.AddScoped<IUserServices, UserServices>();
 			services.AddScoped<IProductServices, ProductServices>();
+			services.AddScoped<ICartServices, CartServices>();
 		}
 		public static void AddIdentityCoreServices(IServiceCollection services) {
 			var builder = services.AddIdentityCore<User>(option => {
