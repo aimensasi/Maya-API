@@ -23,6 +23,10 @@ using Maya.Services.ProductServices;
 using Maya.Services.CartServices;
 using Maya.Services.CartItemServices;
 
+using Maya.Services.OrderServices;
+using Maya.Services.OrderItemServices;
+
+
 namespace Maya {
 	public class Startup {
 		public Startup(IConfiguration configuration) {
@@ -102,6 +106,8 @@ namespace Maya {
 			services.AddScoped<IProductServices, ProductServices>();
 			services.AddScoped<ICartServices, CartServices>();
 			services.AddScoped<ICartItemServices, CartItemServices>();
+			services.AddScoped<IOrderServices, OrderServices>();
+			services.AddScoped<IOrderItemServices, OrderItemServices>();
 		}
 		
 		public static void AddIdentityCoreServices(IServiceCollection services) {

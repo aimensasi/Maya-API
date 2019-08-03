@@ -1,17 +1,9 @@
-using Maya.RequestProperties;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.IO;
-using System.Net.Http.Headers;
 using Maya.Models;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
 using System;
-using System.Text;
-using System.Security.Claims;
-using AspNet.Security.OpenIdConnect;
 using AspNet.Security.OpenIdConnect.Primitives;
 
 namespace Maya.Services.CartServices {
