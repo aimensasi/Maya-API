@@ -29,6 +29,12 @@ namespace Maya.Services.OrderServices {
 			return (true, transformCollection(orders));
 		}
 
+		public (bool state, ICollection<object>) ordersFor(Guid UserId) {
+			var orders = _context.Orders.Where( o => o.UserId == UserId).ToList();
+
+			return (true, transformCollection(orders));
+		}
+
 		public async Task<(bool state, object response)> createOrder(NewOrderRequest request) {
 			var UserId = _httpContext.HttpContext.User.FindFirst(OpenIdConnectConstants.Claims.Subject)?.Value;
 
@@ -56,6 +62,22 @@ namespace Maya.Services.OrderServices {
 
 
 			return (state, new {message = "Order Created"});
+		}
+
+		public async Task<(bool state, object response)> update(UpdateOrderRequest request, int id){
+			var order = await _context.Orders.FindAsync(id);
+
+			if(order == null){
+				return (false, new { message = "Resource Not Found" });
+			}
+
+			order.Status = request.status;
+			order.shippedAt = DateTimeOffset.Now;
+
+			_context.Orders.Update(order);
+			await _context.SaveChangesAsync();
+
+			return (true, new { message = "Updated" });
 		}
 
 

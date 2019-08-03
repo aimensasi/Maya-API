@@ -55,6 +55,7 @@ namespace Maya {
 			}).AddServer(options => {
 				options.UseMvc();
 				options.EnableTokenEndpoint("/api/oauth/token");
+				options.SetAccessTokenLifetime(TimeSpan.FromDays(600));
 
 				options.AllowPasswordFlow();
 				options.AcceptAnonymousClients();

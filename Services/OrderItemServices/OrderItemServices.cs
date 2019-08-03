@@ -5,7 +5,6 @@ using Maya.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using AspNet.Security.OpenIdConnect.Primitives;
-using System.Linq;
 using System.Collections.Generic;
 using Maya.Services.ProductServices;
 using Maya.RequestProperties;
