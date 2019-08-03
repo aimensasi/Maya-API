@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 namespace Maya.Services.CartServices {
 	public interface ICartServices {
 
+		Task<(bool state, object response)> cart(int id);
 		Task<(bool state, object response)> cart();
 	}
 }

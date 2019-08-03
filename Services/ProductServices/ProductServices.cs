@@ -27,9 +27,8 @@ namespace Maya.Services.ProductServices {
 		}
 
 		public ICollection<object> products() {
-			var products = _context.Products
-														 .Include(product => product.Category)
-														 .Include(product => product.ProductImages).ToList();
+			var products = _context.Products.ToList();
+
 			return transformCollection(products);
 		}
 
@@ -172,7 +171,7 @@ namespace Maya.Services.ProductServices {
 			return productImages;
 		}
 
-		private ICollection<object> transformCollection(ICollection<Product> products) {
+		public ICollection<object> transformCollection(ICollection<Product> products) {
 			var productCollection = new List<object>();
 
 			foreach (Product product in products) {
@@ -182,7 +181,7 @@ namespace Maya.Services.ProductServices {
 			return productCollection;
 		}
 
-		private object transform(Product product) {
+		public object transform(Product product) {
 			return new {
 				id = product.Id,
 				name = product.Name,

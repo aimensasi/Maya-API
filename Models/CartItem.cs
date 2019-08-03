@@ -18,5 +18,7 @@ namespace Maya.Models {
 		public int Quantity { get; set; }
 
 		public DateTimeOffset CreatedAt { get; set; }
+
+		public  virtual Product Product { get; set; }
 	}
 }

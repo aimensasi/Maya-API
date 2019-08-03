@@ -25,6 +25,16 @@ namespace Maya.Services.CartServices {
 			_httpContext = httpContext;
 		}
 
+		public async Task<(bool state, object response)> cart(int id) {
+			Cart cart = await _context.Carts.FindAsync(id);
+
+			if(cart == null){
+				return (false, new { message = "Resource Not Found" });
+			}
+
+			return (true, cart);
+		}
+
 
 		public async Task<(bool state, object response)> cart(){
 			var UserId = _httpContext.HttpContext.User.FindFirst(OpenIdConnectConstants.Claims.Subject)?.Value;

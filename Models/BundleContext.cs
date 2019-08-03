@@ -13,8 +13,11 @@ namespace Maya.Models {
 		public DbSet<CartItem> CartItems { get; set; }
 
 		public BundleContext(DbContextOptions<BundleContext> options) : base(options){
-		
 		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		=> optionsBuilder
+				.UseLazyLoadingProxies();
 
 		// protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		// 	modelBuilder.Entity<User>()

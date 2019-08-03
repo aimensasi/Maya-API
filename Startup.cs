@@ -21,6 +21,7 @@ using Microsoft.OpenApi.Models;
 using Maya.Services.UserServices;
 using Maya.Services.ProductServices;
 using Maya.Services.CartServices;
+using Maya.Services.CartItemServices;
 
 namespace Maya {
 	public class Startup {
@@ -100,7 +101,9 @@ namespace Maya {
 			services.AddScoped<IUserServices, UserServices>();
 			services.AddScoped<IProductServices, ProductServices>();
 			services.AddScoped<ICartServices, CartServices>();
+			services.AddScoped<ICartItemServices, CartItemServices>();
 		}
+		
 		public static void AddIdentityCoreServices(IServiceCollection services) {
 			var builder = services.AddIdentityCore<User>(option => {
 				option.Password.RequireNonAlphanumeric = false;
