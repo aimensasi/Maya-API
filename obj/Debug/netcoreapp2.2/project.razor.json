@@ -2943,8 +2943,8 @@
   "RootNamespace": "Maya",
   "Documents": [
     {
-      "FilePath": "View/Home/index.cshtml",
-      "TargetPath": "View/Home/index.cshtml",
+      "FilePath": "Views/Home/Index.cshtml",
+      "TargetPath": "Views/Home/Index.cshtml",
       "FileKind": "mvc"
     }
   ],
