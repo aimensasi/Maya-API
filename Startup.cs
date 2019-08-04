@@ -83,12 +83,12 @@ namespace Maya {
 			
 			AddIdentityCoreServices(services);
 
-			// services.AddCors(options => {
-			// 	options.AddPolicy(MyAllowSpecificOrigins,
-			// 	builder => {
-			// 		builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-			// 	});
-			// });
+			services.AddCors(options => {
+				options.AddPolicy(MyAllowSpecificOrigins,
+				builder => {
+					builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+				});
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,7 +112,7 @@ namespace Maya {
 			// app.UseAdminRegisterBlocker();
 			
 			app.UseStaticFiles();
-			// app.UseCors(MyAllowSpecificOrigins);
+			app.UseCors(MyAllowSpecificOrigins);
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
 			app.UseMvc();
