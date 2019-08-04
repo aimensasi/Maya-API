@@ -2941,5 +2941,12 @@
     "CSharpLanguageVersion": 703
   },
   "RootNamespace": "Maya",
-  "Documents": []
+  "Documents": [
+    {
+      "FilePath": "Views/Home/Index.cshtml",
+      "TargetPath": "Views/Home/Index.cshtml",
+      "FileKind": "mvc"
+    }
+  ],
+  "SerializationFormat": "0.1"
 }

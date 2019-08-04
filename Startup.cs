@@ -16,9 +16,16 @@ using Microsoft.EntityFrameworkCore;
 using OpenIddict.Validation;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Maya.Middlewares;
+using Microsoft.OpenApi.Models;
 
 using Maya.Services.UserServices;
 using Maya.Services.ProductServices;
+using Maya.Services.CartServices;
+using Maya.Services.CartItemServices;
+
+using Maya.Services.OrderServices;
+using Maya.Services.OrderItemServices;
+
 
 namespace Maya {
 	public class Startup {
@@ -27,15 +34,25 @@ namespace Maya {
 		}
 
 		public IConfiguration Configuration { get; }
+		readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddSwaggerGen(c => {
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+			});
+			
 
 			services.AddDbContext<BundleContext>(options => {
 				options.UseSqlServer(Configuration.GetConnectionString("BundleContext"));
 				options.UseOpenIddict<Guid>();
 			});
+
+			// Use SQL Database if in Azure, otherwise, use SQLite
+			if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production") {
+				services.BuildServiceProvider().GetService<BundleContext>().Database.Migrate();
+			}
 
 			ConfigureAppServices(services);
 
@@ -45,6 +62,7 @@ namespace Maya {
 			}).AddServer(options => {
 				options.UseMvc();
 				options.EnableTokenEndpoint("/api/oauth/token");
+				options.SetAccessTokenLifetime(TimeSpan.FromDays(600));
 
 				options.AllowPasswordFlow();
 				options.AcceptAnonymousClients();
@@ -64,6 +82,13 @@ namespace Maya {
 			services.AddHttpContextAccessor();
 			
 			AddIdentityCoreServices(services);
+
+			// services.AddCors(options => {
+			// 	options.AddPolicy(MyAllowSpecificOrigins,
+			// 	builder => {
+			// 		builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+			// 	});
+			// });
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,17 +100,33 @@ namespace Maya {
 				app.UseHsts();
 			}
 
+			// Enable middleware to serve generated Swagger as a JSON endpoint.
+			app.UseSwagger();
+
+			// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+			// specifying the Swagger JSON endpoint.
+			app.UseSwaggerUI(c => {
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+			});
+
 			// app.UseAdminRegisterBlocker();
+			
+			app.UseStaticFiles();
+			// app.UseCors(MyAllowSpecificOrigins);
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
-			app.UseStaticFiles();
 			app.UseMvc();
 		}
 
 		public void ConfigureAppServices(IServiceCollection services){
 			services.AddScoped<IUserServices, UserServices>();
 			services.AddScoped<IProductServices, ProductServices>();
+			services.AddScoped<ICartServices, CartServices>();
+			services.AddScoped<ICartItemServices, CartItemServices>();
+			services.AddScoped<IOrderServices, OrderServices>();
+			services.AddScoped<IOrderItemServices, OrderItemServices>();
 		}
+		
 		public static void AddIdentityCoreServices(IServiceCollection services) {
 			var builder = services.AddIdentityCore<User>(option => {
 				option.Password.RequireNonAlphanumeric = false;

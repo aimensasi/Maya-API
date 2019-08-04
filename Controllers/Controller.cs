@@ -4,6 +4,7 @@ namespace Maya.Controllers {
 
 	[ApiController]
 	public class Controller : ControllerBase {
+		
 
 	}
 }

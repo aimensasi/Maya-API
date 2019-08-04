@@ -48,6 +48,7 @@ namespace Maya.Services.UserServices {
 
 		public object transform(User user) {
 			return new {
+				id = user.Id,
 				name = user.Name,
 				email = user.UserName,
 				createdAt = user.createdAt,

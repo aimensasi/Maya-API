@@ -7,5 +7,7 @@ namespace Maya.Models {
 		public string Name { get; set; }
 
 		public DateTimeOffset createdAt { get; set; }
+
+		public virtual Cart Cart { get; set; }
 	}
 }
