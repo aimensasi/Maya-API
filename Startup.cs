@@ -34,6 +34,7 @@ namespace Maya {
 		}
 
 		public IConfiguration Configuration { get; }
+		readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
@@ -41,11 +42,17 @@ namespace Maya {
 			services.AddSwaggerGen(c => {
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 			});
+			
 
 			services.AddDbContext<BundleContext>(options => {
 				options.UseSqlServer(Configuration.GetConnectionString("BundleContext"));
 				options.UseOpenIddict<Guid>();
 			});
+
+			// Use SQL Database if in Azure, otherwise, use SQLite
+			if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production") {
+				services.BuildServiceProvider().GetService<BundleContext>().Database.Migrate();
+			}
 
 			ConfigureAppServices(services);
 
@@ -75,6 +82,13 @@ namespace Maya {
 			services.AddHttpContextAccessor();
 			
 			AddIdentityCoreServices(services);
+
+			services.AddCors(options => {
+				options.AddPolicy(MyAllowSpecificOrigins,
+				builder => {
+					builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+				});
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,9 +110,11 @@ namespace Maya {
 			});
 
 			// app.UseAdminRegisterBlocker();
+			
+			app.UseStaticFiles();
+			app.UseCors(MyAllowSpecificOrigins);
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
-			app.UseStaticFiles();
 			app.UseMvc();
 		}
 
