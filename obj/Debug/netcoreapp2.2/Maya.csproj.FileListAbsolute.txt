@@ -12,3 +12,12 @@
 /Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.RazorTargetAssemblyInfo.cache
 /Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.dll
 /Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.pdb
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/bin/Debug/netcoreapp2.2/Maya.Views.dll
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/bin/Debug/netcoreapp2.2/Maya.Views.pdb
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.TagHelpers.input.cache
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.TagHelpers.output.cache
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.RazorCoreGenerate.cache
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.RazorTargetAssemblyInfo.cs
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.Views.pdb
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Maya.csproj.CopyComplete
+/Users/aimen.s.a.sasi/Sites/Code/ASP.NET/Maya/obj/Debug/netcoreapp2.2/Razor/Views/Home/Index.g.cshtml.cs
