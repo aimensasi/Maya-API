@@ -41,7 +41,7 @@ namespace Maya {
 			services.AddCors(options => {
 				options.AddPolicy(MyAllowSpecificOrigins,
 				builder => {
-					builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+					builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
 				});
 			});
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
