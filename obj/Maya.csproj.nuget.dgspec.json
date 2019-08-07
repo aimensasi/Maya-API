@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.Azure.Storage.Blob": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Proxies": {
               "target": "Package",
               "version": "[2.2.6, )"
@@ -87,6 +91,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.0.0-rc2, )"
+            },
+            "WindowsAzure.Storage": {
+              "target": "Package",
+              "version": "[9.3.3, )"
             }
           },
           "imports": [
