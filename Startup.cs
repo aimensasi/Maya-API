@@ -38,6 +38,12 @@ namespace Maya {
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
+			services.AddCors(options => {
+				options.AddPolicy(MyAllowSpecificOrigins,
+				builder => {
+					builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+				});
+			});
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 			services.AddSwaggerGen(c => {
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -82,13 +88,6 @@ namespace Maya {
 			services.AddHttpContextAccessor();
 			
 			AddIdentityCoreServices(services);
-
-			// services.AddCors(options => {
-			// 	options.AddPolicy(MyAllowSpecificOrigins,
-			// 	builder => {
-			// 		builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-			// 	});
-			// });
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,7 +111,7 @@ namespace Maya {
 			// app.UseAdminRegisterBlocker();
 			
 			app.UseStaticFiles();
-			// app.UseCors(MyAllowSpecificOrigins);
+			app.UseCors(MyAllowSpecificOrigins);
 			app.UseAuthentication();
 			app.UseHttpsRedirection();
 			app.UseMvc();

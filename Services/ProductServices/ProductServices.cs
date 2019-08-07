@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.Storage;
+using Microsoft.Extensions.Configuration;
+
 
 namespace Maya.Services.ProductServices {
 	public class ProductServices : IProductServices {
@@ -19,11 +23,16 @@ namespace Maya.Services.ProductServices {
 		private readonly BundleContext _context;
 		private readonly IHostingEnvironment _env;
 		private readonly IHttpContextAccessor _httpContext;
+		private readonly IConfiguration _configuration;
+		private readonly string _access_key;
 
-		public ProductServices(BundleContext context, IHostingEnvironment env, IHttpContextAccessor httpContext) {
+		public ProductServices(BundleContext context, IHostingEnvironment env, IHttpContextAccessor httpContext, IConfiguration configuration) {
 			_context = context;
 			_env = env;
 			_httpContext = httpContext;
+			_configuration = configuration;
+
+			_access_key = _configuration.GetConnectionString("BlobAccessKey");
 		}
 
 		public ICollection<object> products() {
@@ -100,26 +109,32 @@ namespace Maya.Services.ProductServices {
 			}
 
 			try {
-				string webRootPath = _env.WebRootPath;
-				string path = Path.Combine(webRootPath, FILE_PATH);
 
-				createDirIfNotExists(path);
 				string filename = generateFileName(image);
-				path = Path.Combine(path, filename);
 
-				using (var stream = new FileStream(path, FileMode.Create)) {
-					await image.CopyToAsync(stream);
+				CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this._access_key);
+
+				CloudBlobClient client = storageAccount.CreateCloudBlobClient();
+
+				CloudBlobContainer container = client.GetContainerReference("products");
+
+				CloudBlockBlob blockBlob = container.GetBlockBlobReference(filename);
+
+
+
+				using (var fileStream = image.OpenReadStream()) {
+					await blockBlob.UploadFromStreamAsync(fileStream);
 				}
 
 				ProductImage productImage = new ProductImage {
 					ProductId = product.Id,
-					Image = filename,
+					Image = blockBlob.Uri.AbsoluteUri,
 				};
 
 				await _context.ProductImages.AddAsync(productImage);
 				await _context.SaveChangesAsync();
 
-				return (true, new { message = "Upload Completed", url = transformUrl(filename) });
+				return (true, new { message = "Upload Completed", url = productImage.Image });
 
 			} catch (Exception e) {
 				return (false, new { message = "Something Went wrong, please try again later" });
@@ -156,9 +171,7 @@ namespace Maya.Services.ProductServices {
 		}
 
 		private string transformUrl(string filename) {
-			string host = $"{_httpContext.HttpContext.Request.Scheme}://{_httpContext.HttpContext.Request.Host}";
-
-			return host + '/' + FILE_PATH + "/" + filename;
+			return filename;
 		}
 
 		private List<object> transformProductImages(Product product) {
